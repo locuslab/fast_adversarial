@@ -73,8 +73,8 @@ def main():
 
     opt = torch.optim.SGD(model.parameters(), lr=args.lr_max, momentum=args.momentum, weight_decay=args.weight_decay)
     amp_args = dict(opt_level=args.opt_level, loss_scale=args.loss_scale, verbosity=False)
-    if args.master_weights:
-        amp_args['master_weights'] = True
+    if args.opt_level == 'O2':
+        amp_args['master_weights'] = args.master_weights
     model, opt = amp.initialize(model, opt, **amp_args)
     criterion = nn.CrossEntropyLoss()
 
