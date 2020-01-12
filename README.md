@@ -36,7 +36,11 @@ However, we discovered that a fairly minor modification to the random initializa
 | Free     |       64.37% |                       43.31% |           52 |
 
 ## But I've tried FGSM adversarial training before, and it didn't work! 
-In our experiments, we discovered several failure modes which would cause FGSM adversarial training to ``catastrophically fail''. If FGSM adversarial training hasn't worked for you in the past, then it may be because of one of the following reasons (which we present as a non-exhaustive list of ways to fail): 
+In our experiments, we discovered several failure modes which would cause FGSM adversarial training to ``catastrophically fail'', like in the following plot. 
+
+![overfitting](https://github.com/locuslab/fast_adversarial/blob/master/overfitting_error_curve.png)
+
+If FGSM adversarial training hasn't worked for you in the past, then it may be because of one of the following reasons (which we present as a non-exhaustive list of ways to fail): 
 
 + FGSM step size is too large, forcing the adversarial examples to cluster near the boundary
 + Random initialization only covers a smaller subset of the threat model
