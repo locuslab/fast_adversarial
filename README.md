@@ -1,6 +1,6 @@
 # Fast adversarial training using FGSM
 
-*A repository that implements the fast adversarial training code using an FGSM adversary, capable of training a robust CIFAR10 classifier in 6 minutes and a robust ImageNet classifier in 12 hours. Created by [Eric Wong](https://riceric22.github.io), [Leslie Rice](https://leslierice1.github.io/), and [Zico Kolter](http://zicokolter.com). See our paper on arXiv [here][paper], which was inspired by the free adversarial training paper [here][freepaper].*
+*A repository that implements the fast adversarial training code using an FGSM adversary, capable of training a robust CIFAR10 classifier in 6 minutes and a robust ImageNet classifier in 12 hours. Created by [Eric Wong](https://riceric22.github.io), [Leslie Rice](https://leslierice1.github.io/), and [Zico Kolter](http://zicokolter.com). See our paper on arXiv [here][paper], which was inspired by the free adversarial training paper [here][freepaper] by Shafahi et al. (2019).*
 
 [paper]: http://arxiv.org/abs/TODO
 [freepaper]: https://arxiv.org/abs/1904.12843
