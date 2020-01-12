@@ -7,7 +7,7 @@
 
 ## News
 + 12/19/2019 - Accepted to ICLR 2020
-+ 12/23/2019 - arXiv posted and repository release
++ 1/14/2019 - arXiv posted and repository release
 
 ## What is in this repository? 
 + An implementation of the FGSM adversarial training method with randomized initialization for MNIST, CIFAR10, and ImageNet
@@ -22,18 +22,24 @@
 ## But wait, I thought FGSM training didn't work!
 As one of the earliest methods for generating adversarial examples, the Fast Gradient Sign Method (FGSM) is also known to be one of the weakest. It has largely been replaced by the PGD-based attacked, and it's use as an attack has become highly discouraged when [evaluating adversarial robustness](https://arxiv.org/abs/1902.06705). Afterall, early attempts at using FGSM adversarial training (including variants of randomized FGSM) were unsuccessful, and this was largely attributed to the weakness of the attack. 
 
-However, we discovered that a fairly minor modification to the random initialization for FGSM adversarial training allows it to perform as well as the much more expensive PGD adversarial training. This was quite surprising to us, and suggests that one does not need very strong adversaries to learn robust models! As a result, we pushed the FGSM adversarial training to the limit, and found that by incorporating various techniques for fast training used in the [DAWNBench](https://dawn.cs.stanford.edu/benchmark/) competition, we could learn robust architectures an order of magnitude faster than before, while achieving the same degrees of robustness. 
+However, we discovered that a fairly minor modification to the random initialization for FGSM adversarial training allows it to perform as well as the much more expensive PGD adversarial training. This was quite surprising to us, and suggests that one does not need very strong adversaries to learn robust models! As a result, we pushed the FGSM adversarial training to the limit, and found that by incorporating various techniques for fast training used in the [DAWNBench](https://dawn.cs.stanford.edu/benchmark/) competition, we could learn robust architectures an order of magnitude faster than before, while achieving the same degrees of robustness. A couple of the results from the paper are highlighted in the table below. 
 
-|          | CIFAR10 Acc | CIFAR10 Adv Acc (eps=0.1) | MNIST Acc | MNIST Adv Acc (eps=1.0) |
-| --------:| ----------:|----------:| ---------:| ------------:|
-| Standard     |       95% |       3% |     99% |          4% |
-| l-inf robust |       66% |      61% |     98% |         48% |
-| Adv training |       81% |      76% |     97% |         86% |
-| Binarization |         - |        - |     99% |         14% |
+|          | CIFAR10 Acc | CIFAR10 Adv Acc (eps=8/255) | Time (minutes) | 
+| --------:| -----------:|----------------------------:|---------------:| 
+| FGSM     |      86.06% |                      46.06% |             12 |
+| Free     |      85.96% |                      46.33% |            785 |
+| PGD      |      87.30% |                      45.80% |           4966 |
 
-## But I've tried this before, and it didn't work! 
+|          | ImageNet Acc | ImageNet Adv Acc (eps=2/255) | Time (hours) | 
+| --------:| ------------:|-----------------------------:|-------------:| 
+| FGSM     |       60.90% |                       43.46% |           12 |
+| Free     |       64.37% |                       43.31% |           52 |
+
+## But I've tried FGSM adversarial training before, and it didn't work! 
 In our experiments, we discovered several failure modes which would cause FGSM adversarial training to ``catastrophically fail''. If FGSM adversarial training hasn't worked for you in the past, then it may be because of one of the following reasons (which we present as a non-exhaustive list of ways to fail): 
+
 + FGSM step size is too large, forcing the adversarial examples to cluster near the boundary
 + Random initialization only covers a smaller subset of the threat model
 + Long training with many epochs and fine tuning with very small learning rates
+
 All of these pitfalls can be avoided by simply using early stopping based on a subset of the training data to evaluate the robust accuracy with respect to PGD, as the failure mode for FGSM adversarial training occurs quite rapidly (going to 0% robust accuracy within the span of a couple epochs)
