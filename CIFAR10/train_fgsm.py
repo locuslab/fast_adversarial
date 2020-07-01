@@ -105,8 +105,8 @@ def main():
             if args.delta_init != 'previous':
                 delta = torch.zeros_like(X).cuda()
             if args.delta_init == 'random':
-                for i in range(len(epsilon)):
-                    delta[:, i, :, :].uniform_(-epsilon[i][0][0].item(), epsilon[i][0][0].item())
+                for j in range(len(epsilon)):
+                    delta[:, j, :, :].uniform_(-epsilon[j][0][0].item(), epsilon[j][0][0].item())
                 delta.data = clamp(delta, lower_limit - X, upper_limit - X)
             delta.requires_grad = True
             output = model(X + delta[:X.size(0)])
